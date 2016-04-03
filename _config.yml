@@ -1,0 +1,12 @@
+# Site settings
+title: coldplazma
+email: matthew.d.weger@gmail.com
+description: "Just a personal site nothing too serious just for fun"
+baseurl: ""
+url: "https://www.coldplazma.com"
+twitter_username: three_legs
+github_username:  w-m-d
+
+# Build settings
+markdown: kramdown
+permalink: pretty
