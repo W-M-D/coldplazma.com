@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hacking on the JLFCWPIR</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.">
+    <link rel="canonical" href="http://yourdomain.com/hacking/rf/2016/06/05/JLFCWPIR/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+     <style>
+      body  {
+          background-image: url('/assets/Background.png');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          color:white;
+          background-size: cover;
+          background-position: center
+      }
+      </style>
+
+</head>
+
+
+    <body>
+
+    <header class="site-header">
+
+</header>
+
+    
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/index.html">Coldplazma</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+          
+             
+               <li><a href="/about/">About</a></li>
+             
+          
+             
+               <li><a href="/contact/">Contact</a></li>
+             
+          
+             
+               <li><a href="/">Home</a></li>
+             
+          
+	    <li class="dropdown">
+	      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Projects <span class="caret"></span></a>
+	      <ul class="dropdown-menu">
+		<li><a href="https://github.com/w-m-d">Github</a></li>
+		<li role="separator" class="divider"></li>
+		<li class="dropdown-header">Other projects</li>
+	      </ul>
+	    </li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+        <div class="container">
+
+      <!-- Main component for a primary marketing message or call to action -->
+      <div style=" background:rgba(54, 54, 54, 0.5) !important"  class="jumbotron">
+      <div class="post">
+
+  <header class="post-header">
+    <h1>Hacking on the JLFCWPIR</h1>
+    <p class="meta">Jun 5, 2016</p>
+  </header>
+
+  <article class="post-content">
+  <p>Hello everyone, This post is going to be about one of my favorite things in the world of home security. It’s not cameras it’s the awesome inferred chamberlain driveway sensor. This IR sensor shall be known as the JLFCWPIR for the remainder of this article. Now the JLFCWPIR is a awesome, cheap, stable and relativity unjamable IR sensor. This is much better than most motion sensor because it uses both motion and heat to trigger an event. The only problem with it is it has no logging of any kind and there is a limited number of units a base station can manage. However , if you set up enough of these around your house no one is getting past with out you knowing. That is if you are home. My first hack on this device was simple. I knew little about hardware RF stuff at the time so I just bought another base station removed the speaker from the device and hooked it up to arduino that ran a program to count the number of beeps that it would have made. I then took the units and synced them to both base stations at the same time so the main base station would still beep, but I would have an arduino that put out a number. After this I hooked up the arduino to a raspberry pi via UART and wrote another program to send me a SMS via Gmail. This worked like a charm I could be anywhere and get a SMS that someone walked past my sensor. This also meant I had logging of times that a person did so. However I was dissatisfied with this. The counting had to wait until the sequence could be completed (1-6 seconds) so by the time I got a text someone was already at my front door. So I proceeded to explore other methods.</p>
+
+<p>The hardware: 
+The micro controller:<a href="http://www.microchip.com/wwwproducts/en/PIC18F25K20">PIC18F25K20</a>
+The radio:<a href="https://www.silabs.com/Support%20Documents/TechnicalDocs/Si4430-31-32.pdf">SI4432</a></p>
+
+<p>References :</p>
+
+<p><a href="https://fccid.io/document.php?id=1124841">UL writeup for the FCC</a></p>
+
+<p><a href="https://coldplazma.com/assets/jlfcwpir/PIC18F25K20.html">A dump of the main stations firmware</a></p>
+
+<p>Pictures:
+<img src="/assets/jlfcwpir/JLFCWPIR_CASE.jpeg" alt="Profile" />
+<img src="/assets/jlfcwpir/JLFCWPIR_HOMEBASE2.jpeg" alt="Profile" />
+<img src="/assets/jlfcwpir/JLFCWPIR_HOMEBASE.jpeg" alt="Profile" />
+<img src="/assets/jlfcwpir/JLFCWPIR.jpeg" alt="Profile" />
+<img src="/assets/jlfcwpir/JLFCWPIR_PIC18F25K20.jpeg" alt="Profile" />
+<img src="/assets/jlfcwpir/JLFCWPIR_RADIO.jpeg" alt="Profile" />
+<img src="/assets/jlfcwpir/JLFCWPIR_SENSOR_MAINBOARD.jpeg" alt="Profile" /></p>
+
+<p>Step one the breakout:</p>
+
+<p>So I looked deeper into the base station trying to find a UART port it seems that the UART was not configured. Next I looked at the SPI and I2C pins and there was still no readout besides chatter between the radio and the PIC chip. Eventually I hooked up a programmer to the PIC interface and went at it. I was able to dump the firmware and got some information out of it but was unable to find an enumerator.Also, I was not able to upload new firmware becaus the fuse was blown.</p>
+
+<p>Step two – The RTL-SDR:
+Now logically I thought the best way to do this would be the cheapest way possible. Now I already had a $20 sdr so I thought it would be a piece of cake now that I had the firmware. However after writing a program in GRC I found that the sdr had a built in settle time of 5ms but the hop time of the JLFCWPIR was 2.5ms. I could not follow the FHSS signal fast enough through its 25MHz bandwidth. At this point I gave up and went back to my old method. However recently I got a hackrf and ran a test.</p>
+
+<div class="embed-responsive embed-responsive-16by9">
+   <iframe width="560" height="315" class="embed-responsive-item" src="https://www.youtube.com/embed/AFsKdCGwxvk" frameborder="0" allowfullscreen=""></iframe>
+</div>
+
+<p>What could it possibly be transmitting.</p>
+
+  </article>
+
+</div> 
+      </div>
+
+    </div> <!-- /container -->
+
+
+    <footer class="site-footer">
+
+</footer>
+
+        <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../node_modules/bootstrap/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+
+
+
+    </body>
+</html>

@@ -534,3 +534,42 @@ so i'm going to create and run a few more tests that arn't in the scope of <a hr
 <h2>Update Mon May 16 11:49:30 EDT 2016 Finding a needle in a haystack of needles:</h2>
 
 I have ran a few more tests and i still can't figure out why it's (apparently) not random. Although there is some correlation with the sin(prime_numbers) for some weird reason. However, i have decided that there are some jobs that humans just arn't good at and this is one of them. I have decided to employ my knowledge of scala and this cool new <a href="https://github.com/deeplearning4j/deeplearning4j">library</a> to learn more about this data. Now apparently employing neural nets for something like this "is overkill". I could do something like subtract every event from every other event and find some patterns in there but if this is caused by build up in the GM-tube (which i'm planning on testing hardware wise) it won't be very consistant and may just be adding more entropy to the pool. Having a deep learning algorithm will also pave the way for a spacial tracking for all units that i was planning on doing with machine learning. As well as allow me to find sequences such as coordinated events within a localized group and maybe even find the power of the cosmic ray that hit this area. Anyways, i love overkill especially if it doesn't cost me anything. I am also creating a test for the Bonferroni correction that i may encorprate back into ent when i get it working. I'm also going to try isolating a unit in a farday cage to see if any Low frequency raido signals are setting off the GM-tube at a constant interval, and maybe building a CV enabled cloud chamber(Simons idea) and putting it ontop of the unit to count how may events are from radiation. 
+
+Update Wed May 18 15:29:36 EDT 2016 isotope test:
+I ran a test using three isotopes to trigger the GM-tube on our units after i collected 10,000 events i ran ent on the packed timestamps and got this.
+
+{% highlight ruby %}
+Entropy = 7.347697 bits per byte.
+
+Optimum compression would reduce the size
+of this 40000 byte file by 8 percent.
+
+Chi square distribution for 40000 samples is 105739.11, and randomly
+would exceed this value less than 0.01 percent of the times.
+
+Arithmetic mean value of data bytes is 95.9811 (127.5 = random).
+Monte Carlo value for Pi is 3.578757876 (error 13.92 percent).
+Serial correlation coefficient is -0.143473 (totally uncorrelated = 0.0).
+
+compared to our unit under normal operation 
+
+Entropy = 7.360579 bits per byte.
+
+Optimum compression would reduce the size
+of this 40000 byte file by 7 percent.
+
+Chi square distribution for 40000 samples is 104165.49, and randomly
+would exceed this value less than 0.01 percent of the times.
+
+Arithmetic mean value of data bytes is 96.0476 (127.5 = random).
+Monte Carlo value for Pi is 3.584758476 (error 14.11 percent).
+Serial correlation coefficient is -0.135314 (totally uncorrelated = 0.0).
+
+{% endhighlight %} 
+
+there could still be a trigger from lf radio even at the high rates. 
+
+Wed May 18 18:17:04 EDT 2016 isotope test update:
+
+I have found that this expirment is flawed. I have found that triggering the gps multiple times in the 200Ms window causes it to use the last event in that window. So the numbers will always be high. However, if i move the isotopes further away i allow for the unit to be triggered by cosmic rays. Short of running this expirement in a very deep salt mine or under the swiss alps i have no way of assuring that cosmic rays are not triggering the unit. I am testing the results that i have from the faraday caged unit. We will see what the results are.  
+
